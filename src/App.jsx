@@ -3,7 +3,7 @@ import Container from "react-bootstrap/Container";
 
 import Navbar from "./components/Navbar";
 import Product from "./components/Product";
-import Footer from "./components/Footer";
+import Footer from "./components/UI/Footer";
 import custom from "./custom";
 
 const productsArr = [

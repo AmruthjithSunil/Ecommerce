@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Container from "react-bootstrap/Container";
-import custom from "../custom";
+import custom from "../../custom";
 
 const Frame = styled.div`
   height: 100px;
