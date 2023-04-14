@@ -1,28 +1,17 @@
+import { useContext } from "react";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import Table from "react-bootstrap/Table";
-
-const cartElements = [
-  {
-    title: "Colors",
-    price: 100,
-    imageUrl: "https://prasadyash2411.github.io/ecom-website/img/Album%201.png",
-    quantity: 2,
-  },
-  {
-    title: "Black and white Colors",
-    price: 50,
-    imageUrl: "https://prasadyash2411.github.io/ecom-website/img/Album%202.png",
-    quantity: 3,
-  },
-  {
-    title: "Yellow and Black Colors",
-    price: 70,
-    imageUrl: "https://prasadyash2411.github.io/ecom-website/img/Album%203.png",
-    quantity: 1,
-  },
-];
+import CartContext from "../../store/cart-context";
 
 export default function OffCanvas({ show, handleClose }) {
+  const cartCtx = useContext(CartContext);
+
+  function removeHandler(id) {
+    return function () {
+      cartCtx.removeItem(id);
+    };
+  }
+
   return (
     <Offcanvas
       show={show}
@@ -43,25 +32,19 @@ export default function OffCanvas({ show, handleClose }) {
             </tr>
           </thead>
           <tbody>
-            {cartElements.map((el) => (
-              <tr key={el.title}>
+            {cartCtx.items.map((el) => (
+              <tr key={el.id}>
                 <td>{el.title}</td>
                 <td>{el.price}</td>
                 <td>{el.quantity}</td>
-                <td
-                  onClick={() => {
-                    console.log("removed");
-                  }}
-                >
-                  remove
-                </td>
+                <td onClick={removeHandler(el.id)}>remove</td>
               </tr>
             ))}
           </tbody>
         </Table>
         <h3>
           Total :{" "}
-          {cartElements.reduce((acc, el) => acc + el.quantity * el.price, 0)}
+          {cartCtx.items.reduce((acc, el) => acc + el.quantity * el.price, 0)}
         </h3>
       </Offcanvas.Body>
     </Offcanvas>

@@ -3,11 +3,14 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Button from "react-bootstrap/Button";
 import Badge from "react-bootstrap/Badge";
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 import OffCanvas from "./UI/OffCanvas";
+import CartContext from "../store/cart-context";
 
 export default function NavBar() {
+  const cartCtx = useContext(CartContext);
+
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -21,7 +24,9 @@ export default function NavBar() {
           <Nav.Link>About</Nav.Link>
           <Nav.Link>
             <Button onClick={handleShow}>Cart</Button>
-            <Badge bg="secondary">0</Badge>
+            <Badge bg="secondary">
+              {cartCtx.items.reduce((acc, item) => acc + item.quantity, 0)}
+            </Badge>
           </Nav.Link>
         </Nav>
         <OffCanvas show={show} handleClose={handleClose} />

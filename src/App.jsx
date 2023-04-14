@@ -4,6 +4,7 @@ import Container from "react-bootstrap/Container";
 import Navbar from "./components/Navbar";
 import Product from "./components/Product";
 import Footer from "./components/UI/Footer";
+import CartProvider from "./store/CartProvider";
 import custom from "./custom";
 
 const productsArr = [
@@ -47,7 +48,7 @@ const SubHead = styled.h2`
 
 export default function App() {
   return (
-    <>
+    <CartProvider>
       <Navbar />
       <Head>
         <Title>The Generics</Title>
@@ -61,6 +62,6 @@ export default function App() {
         </div>
       </Container>
       <Footer />
-    </>
+    </CartProvider>
   );
 }

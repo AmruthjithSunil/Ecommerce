@@ -1,6 +1,8 @@
 import Figure from "react-bootstrap/Figure";
 import Button from "react-bootstrap/Button";
 import styled from "styled-components";
+import { useContext } from "react";
+import CartContext from "../store/cart-context";
 
 const Frame = styled.div`
   margin: 10px 0;
@@ -10,6 +12,12 @@ const Frame = styled.div`
 `;
 
 export default function Product({ product }) {
+  const cartCtx = useContext(CartContext);
+
+  function clickHandler() {
+    cartCtx.addItem({ ...product, id: product.title });
+  }
+
   return (
     <Frame className="col-6">
       <Figure.Image
@@ -20,7 +28,7 @@ export default function Product({ product }) {
       />
       <div className="d-flex">
         <p>${product.price}</p>
-        <Button>ADD TO CART</Button>
+        <Button onClick={clickHandler}>ADD TO CART</Button>
       </div>
     </Frame>
   );
