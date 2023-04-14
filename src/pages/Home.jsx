@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
+import Container from "react-bootstrap/Container";
 
 const Top = styled.div`
   background: #777;
@@ -28,11 +29,11 @@ const Tbody = styled.tbody`
 
 const tours = [
   { date: "JUL16", location: "DETROIT, MI", name: "DTE ENERGY MUSIC THEATRE" },
-  { date: "JUL16", location: "DETROIT, MI", name: "DTE ENERGY MUSIC THEATRE" },
-  { date: "JUL16", location: "DETROIT, MI", name: "DTE ENERGY MUSIC THEATRE" },
-  { date: "JUL16", location: "DETROIT, MI", name: "DTE ENERGY MUSIC THEATRE" },
-  { date: "JUL16", location: "DETROIT, MI", name: "DTE ENERGY MUSIC THEATRE" },
-  { date: "JUL16", location: "DETROIT, MI", name: "DTE ENERGY MUSIC THEATRE" },
+  { date: "JUL19", location: "TORONTO,ON", name: "BUDWEISER STAGE" },
+  { date: "JUL16", location: "DETROIT, MI", name: "JIGGY LUBE LIVE" },
+  { date: "JUL16", location: "DETROIT, MI", name: "AK-CHIN PAVILION" },
+  { date: "JUL16", location: "DETROIT, MI", name: "T-MOBILE ARENA" },
+  { date: "JUL16", location: "DETROIT, MI", name: "CONCORD PAVILION" },
 ];
 
 export default function Home() {
@@ -44,18 +45,20 @@ export default function Home() {
         <Play>Play</Play>
       </Top>
       <SubHead>TOURS</SubHead>
-      <Table>
-        <Tbody>
-          {tours.map((tour) => (
-            <tr key={tour.name}>
-              <td>{tour.date}</td>
-              <td>{tour.location}</td>
-              <td>{tour.name}</td>
-              <button>BUY TICKETS</button>
-            </tr>
-          ))}
-        </Tbody>
-      </Table>
+      <Container>
+        <Table>
+          <Tbody>
+            {tours.map((tour) => (
+              <tr key={tour.name}>
+                <td>{tour.date}</td>
+                <td>{tour.location}</td>
+                <td>{tour.name}</td>
+                <button>BUY TICKETS</button>
+              </tr>
+            ))}
+          </Tbody>
+        </Table>
+      </Container>
     </>
   );
 }
