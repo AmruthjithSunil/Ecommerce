@@ -1,0 +1,47 @@
+import Container from "react-bootstrap/Container";
+
+import styled from "styled-components";
+import Product from "../components/Product";
+
+const productsArr = [
+  {
+    title: "Colors",
+    price: 100,
+    imageUrl: "https://prasadyash2411.github.io/ecom-website/img/Album%201.png",
+  },
+  {
+    title: "Black and white Colors",
+    price: 50,
+    imageUrl: "https://prasadyash2411.github.io/ecom-website/img/Album%202.png",
+  },
+  {
+    title: "Yellow and Black Colors",
+    price: 70,
+    imageUrl: "https://prasadyash2411.github.io/ecom-website/img/Album%203.png",
+  },
+  {
+    title: "Blue Color",
+    price: 100,
+    imageUrl: "https://prasadyash2411.github.io/ecom-website/img/Album%204.png",
+  },
+];
+
+const SubHead = styled.h2`
+  text-align: center;
+  color: black;
+`;
+
+export default function Store() {
+  return (
+    <>
+      <SubHead>Music</SubHead>
+      <Container>
+        <div className="row">
+          {productsArr.map((product) => (
+            <Product key={product.title} product={product} />
+          ))}
+        </div>
+      </Container>
+    </>
+  );
+}
