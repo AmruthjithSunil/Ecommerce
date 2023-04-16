@@ -1,7 +1,13 @@
 import Container from "react-bootstrap/Container";
-
+import Button from "react-bootstrap/Button";
+import Badge from "react-bootstrap/Badge";
 import styled from "styled-components";
+import { useState, useContext } from "react";
+
 import Product from "../components/Product";
+import OffCanvas from "../components/UI/OffCanvas";
+import CartContext from "../store/cart-context";
+//bug vite
 
 const productsArr = [
   {
@@ -31,9 +37,28 @@ const SubHead = styled.h2`
   color: black;
 `;
 
+const CartIcon = styled.div`
+  position: absolute;
+  top: 10px;
+  right: 0;
+`;
+
 export default function Store() {
+  const cartCtx = useContext(CartContext);
+
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   return (
     <>
+      <CartIcon>
+        <Button onClick={handleShow}>Cart</Button>
+        <Badge bg="secondary">
+          {cartCtx.items.reduce((acc, item) => acc + item.quantity, 0)}
+        </Badge>
+      </CartIcon>
+      <OffCanvas show={show} handleClose={handleClose} />
       <SubHead>Music</SubHead>
       <Container>
         <div className="row">
