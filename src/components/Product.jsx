@@ -3,6 +3,7 @@ import Button from "react-bootstrap/Button";
 import styled from "styled-components";
 import { useContext } from "react";
 import CartContext from "../store/cart-context";
+import { Link } from "react-router-dom";
 
 const Frame = styled.div`
   margin: 10px 0;
@@ -20,12 +21,14 @@ export default function Product({ product }) {
 
   return (
     <Frame className="col-6">
-      <Figure.Image
-        width={171}
-        height={180}
-        alt="171x180"
-        src={product.imageUrl}
-      />
+      <Link to={`/products/${product.title}`}>
+        <Figure.Image
+          width={171}
+          height={180}
+          alt="171x180"
+          src={product.imageUrl}
+        />
+      </Link>
       <div className="d-flex">
         <p>${product.price}</p>
         <Button onClick={clickHandler}>ADD TO CART</Button>
