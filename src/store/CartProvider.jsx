@@ -3,8 +3,10 @@ import CartContext from "./cart-context";
 
 export default function CartProvider({ children }) {
   const [items, setItems] = useState([]);
+  const [token, setToken] = useState(localStorage.getItem("token"));
 
   const cartContext = {
+    token,
     items,
     addItem(item) {
       setItems((items) => {
@@ -27,6 +29,9 @@ export default function CartProvider({ children }) {
           el.id === id ? { ...element, quantity: el.quantity - 1 } : el
         );
       });
+    },
+    updateToken(token) {
+      setToken(token);
     },
   };
 

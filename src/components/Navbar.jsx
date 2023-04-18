@@ -20,6 +20,9 @@ export default function NavBar() {
           <Nav.Link as={NavLink} to="/contact">
             Contact
           </Nav.Link>
+          <Nav.Link as={NavLink} to="/login">
+            Login
+          </Nav.Link>
         </Nav>
       </Container>
     </Navbar>
