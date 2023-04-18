@@ -40,9 +40,6 @@ export default function Login() {
     } else {
       alert(data.error.message);
     }
-
-    password.current.value = "";
-    email.current.value = "";
   }
 
   return (

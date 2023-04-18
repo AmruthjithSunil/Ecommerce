@@ -7,7 +7,7 @@ import { useState, useContext } from "react";
 import Product from "../components/Product";
 import OffCanvas from "../components/UI/OffCanvas";
 import CartContext from "../store/cart-context";
-//bug vite
+import { Navigate } from "react-router-dom";
 
 const productsArr = [
   {
@@ -51,7 +51,9 @@ export default function Store() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   return (
+    //bug vite
     <>
+      {localStorage.getItem("token") == null && <Navigate to="/login" />}
       <CartIcon>
         <Button onClick={handleShow}>Cart</Button>
         <Badge bg="secondary">
