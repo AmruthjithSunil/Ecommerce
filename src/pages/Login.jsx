@@ -36,6 +36,7 @@ export default function Login() {
     if (res.ok) {
       setIsLoggedin(true);
       localStorage.setItem("token", data.idToken);
+      localStorage.setItem("email", data.email);
       cartCtx.updateToken(data.idToken);
     } else {
       alert(data.error.message);
