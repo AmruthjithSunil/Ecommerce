@@ -2,66 +2,80 @@ import { useEffect, useState } from "react";
 import CartContext from "./cart-context";
 
 export default function CartProvider({ children }) {
-  const endpoint = "60717ab4145547e58bd76322acbc75de";
-  const crudcrudUrl = `https://crudcrud.com/api/${endpoint}`;
-  const [id, setId] = useState(0);
+  const endpoint = "68ee35e910e44243bf73ac237698d2e4";
+  const link = `https://crudcrud.com/api/${endpoint}`;
+
+  if (!localStorage.getItem("email")) {
+    localStorage.setItem("email", "null");
+  }
+
+  if (!localStorage.getItem("token")) {
+    localStorage.setItem("token", "null");
+  }
+
+  const initEmail = localStorage.getItem("email");
+
+  const [email, setEmail] = useState(initEmail);
   const [items, setItems] = useState([]);
+  const [id, setId] = useState("");
+
+  async function initializeOrFetchItemsFromBackend() {
+    if (email === "null") {
+      return;
+    }
+    const res = await fetch(link);
+    const emails = await res.json();
+    const em = email.replaceAll("@", "").replaceAll(".", "");
+    if (emails.includes(em)) {
+      const response = await fetch(`${link}/${em}`);
+      const data = await response.json();
+      setItems(data[0].cart);
+      setId(data[0]._id);
+    } else {
+      const response = await fetch(`${link}/${em}`, {
+        method: "POST",
+        body: JSON.stringify({ cart: [] }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await response.json();
+      setId(data[0]._id);
+    }
+  }
+
+  useEffect(() => {
+    initializeOrFetchItemsFromBackend();
+  }, []);
+
   const [token, setToken] = useState(localStorage.getItem("token"));
 
   useEffect(() => {
-    fetch(
-      `${crudcrudUrl}/${localStorage
-        .getItem("email")
-        .replaceAll("@", "")
-        .replaceAll(".", "")}/`
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.length) {
-          setId(data[0]._id);
-          setItems(data[0].cart);
-        }
+    if (email !== "null") {
+      const em = email.replaceAll("@", "").replaceAll(".", "");
+      fetch(`${link}/${em}/${id}`, {
+        method: "PUT",
+        body: JSON.stringify({ cart: items }),
+        headers: {
+          "Content-Type": "application/json",
+        },
       });
-  }, []);
+    }
+  }, [JSON.stringify(items)]);
 
   useEffect(() => {
-    if (id === 0) {
-      fetch(
-        `${crudcrudUrl}/${localStorage
-          .getItem("email")
-          .replaceAll("@", "")
-          .replaceAll(".", "")}/`,
-        {
-          method: "POST",
-          body: JSON.stringify({ cart: items }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      )
-        .then((res) => res.json())
-        .then((data) => setId(data._id));
-    } else {
-      fetch(
-        `${crudcrudUrl}/${localStorage
-          .getItem("email")
-          .replaceAll("@", "")
-          .replaceAll(".", "")}/${id}`,
-        {
-          method: "PUT",
-          body: JSON.stringify({ cart: items }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      )
-        .then((res) => res.json())
-        .then((data) => console.log(data._id));
-    }
-  }, [items]);
+    localStorage.setItem("token", token);
+  }, [token]);
+
+  useEffect(() => {
+    localStorage.setItem("email", email);
+    initializeOrFetchItemsFromBackend();
+  }, [email]);
 
   const cartContext = {
+    id,
     token,
+    email,
     items,
     addItem(item) {
       setItems((items) => {
@@ -86,8 +100,18 @@ export default function CartProvider({ children }) {
         );
       });
     },
+    updateItems(items) {
+      setItems(items);
+    },
     updateToken(token) {
       setToken(token);
+    },
+    updateEmail(email) {
+      setEmail(email);
+    },
+    logout() {
+      setToken("null");
+      setEmail("null");
     },
   };
 

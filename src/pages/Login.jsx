@@ -1,7 +1,7 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container";
-import { useContext, useRef, useState } from "react";
+import { useContext, useRef } from "react";
 import env from "../env";
 import { Navigate } from "react-router-dom";
 import CartContext from "../store/cart-context";
@@ -12,13 +12,8 @@ export default function Login() {
 
   const cartCtx = useContext(CartContext);
 
-  const [isLoggedin, setIsLoggedin] = useState(
-    localStorage.getItem("token") != null
-  );
-
   async function submitHandler(e) {
     e.preventDefault();
-    console.log("a");
     const endpoint = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${env.apiKey}`;
 
     const res = await fetch(endpoint, {
@@ -34,10 +29,8 @@ export default function Login() {
     });
     const data = await res.json();
     if (res.ok) {
-      setIsLoggedin(true);
-      localStorage.setItem("token", data.idToken);
-      localStorage.setItem("email", data.email);
       cartCtx.updateToken(data.idToken);
+      cartCtx.updateEmail(data.email);
     } else {
       alert(data.error.message);
     }
@@ -45,7 +38,7 @@ export default function Login() {
 
   return (
     <Container>
-      {isLoggedin && <Navigate to="/store" />}
+      {cartCtx.token !== "null" && <Navigate to="/store" />}
       <Form>
         <Form.Group>
           <Form.Label>Email:</Form.Label>

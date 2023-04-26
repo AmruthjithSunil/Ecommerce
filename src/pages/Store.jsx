@@ -53,7 +53,7 @@ export default function Store() {
   return (
     //bug vite
     <>
-      {localStorage.getItem("token") == null && <Navigate to="/login" />}
+      {cartCtx.token === "null" && <Navigate to="/login" />}
       <CartIcon>
         <Button onClick={handleShow}>Cart</Button>
         <Badge bg="secondary">

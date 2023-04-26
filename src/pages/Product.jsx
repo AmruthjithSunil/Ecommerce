@@ -69,8 +69,8 @@ export default function Product() {
         alt="171x180"
         src={product.image3}
       />
-      <p>{product.reviews[0]}</p>
-      <p>{product.reviews[1]}</p>
+      <p>John:{product.reviews[0]}</p>
+      <p>Jacob:{product.reviews[1]}</p>
     </>
   );
 }

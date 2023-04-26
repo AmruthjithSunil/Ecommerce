@@ -15,7 +15,6 @@ export default function Contact() {
       email: email.current.value,
       phone: phone.current.value,
     };
-    console.log(user);
     name.current.value = "";
     email.current.value = "";
     phone.current.value = "";
